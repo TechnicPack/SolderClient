@@ -1,0 +1,22 @@
+{
+  "name": "technic/solderclient",
+  "type": "library",
+  "description": "PHP Library to communicate with Technic Solder",
+  "homepage": "https://github.com/Technic/SolderClient",
+  "license": "MIT",
+  "authors": [{
+    "name": "Ryan Cohen",
+    "email": "sct@technicpack.net",
+    "homepage": "http://www.technicpack.net",
+    "role": "Developer"
+    }],
+  "require": {
+    "php": ">=5.3.0",
+    "guzzle/guzzle": "~3.7"
+  },
+  "autoload": {
+        "psr-0": {
+            "Technic\\SolderClient": "src/"
+        }
+    }
+}
