@@ -1,5 +1,5 @@
 {
-  "name": "technic/solderclient",
+  "name": "technicpack/solderclient",
   "type": "library",
   "description": "PHP Library to communicate with Technic Solder",
   "homepage": "https://github.com/Technic/SolderClient",
@@ -16,7 +16,7 @@
   },
   "autoload": {
         "psr-0": {
-            "Technic\\SolderClient": "src/"
+            "TechnicPack\\SolderClient": "src/"
         }
     }
 }
