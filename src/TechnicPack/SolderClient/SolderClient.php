@@ -14,8 +14,8 @@ use Guzzle\Http\Exception\ClientErrorResponseException;
 
 class SolderClient
 {
-    private $url;
-    private $key;
+    public $url;
+    public $key;
     private $client;
 
     public static function factory($url, $key)
