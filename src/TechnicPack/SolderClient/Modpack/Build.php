@@ -6,9 +6,9 @@ use TechnicPack\SolderClient\Mod\Mod;
 
 class Build
 {
-	private $minecraft;
-	private $minecraft_md5;
-	private $mods = array();
+	public $minecraft;
+	public $minecraft_md5;
+	public $mods = array();
 
 	public function __construct($properties)
 	{
