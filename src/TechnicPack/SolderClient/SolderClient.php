@@ -81,7 +81,7 @@ class SolderClient
     public function getBuild($modpack, $build)
     {
         try {
-            $uri = 'modpack/'.$modpack.'/'.$build;
+            $uri = 'modpack/'.$modpack.'/'.$build.'?include=mods';
             $response = $this->client->get($uri)->send()->json();
 
             return new Build($response);

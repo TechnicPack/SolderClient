@@ -7,7 +7,10 @@ class Mod
 	public $name;
 	public $version;
 	public $md5;
-	public $url;
+	public $pretty_name;
+	public $author;
+	public $description;
+	public $link;
 
 	public function __construct($properties)
 	{
