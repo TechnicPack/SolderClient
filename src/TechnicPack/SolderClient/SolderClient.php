@@ -92,23 +92,16 @@ class SolderClient
 
     public static function validateUrl($url)
     {
-        $array = parse_url($url);
 
-        if (!isset($array['path']) || $array['path'] == "/") {
+        if (!preg_match("/\/api\/?$/", $url)) {
             throw new InvalidURLException('You must include api/ at the end of your URL');
         }
 
-        $path = $array['path'];
-
-        if ($path != "/api/" && $path != "/api") {
-            throw new InvalidURLException('You must include api/ at the end of your URL');
+        if (preg_match("/\/api$/", $url)) {
+            $url = $url.'/';
         }
 
-        if ($path == "/api") {
-            $path = "/api/";
-        }
-
-        return $array['scheme'].'://'.$array['host'].$path;
+        return $url;
     }
 
     public static function validateKey(Client $client, $key)
