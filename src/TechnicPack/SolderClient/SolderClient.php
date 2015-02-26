@@ -46,9 +46,9 @@ class SolderClient
     public function getModpacks($recursive = false)
     {
         try {
-            $uri = 'modpack';
+            $uri = 'modpack?k=' . $this->key;
             if ($recursive) {
-                $uri = 'modpack?include=full';
+                $uri = 'modpack?include=full&k=' . $this->key;
             }
 
             $response = $this->client->get($uri)->send()->json();
