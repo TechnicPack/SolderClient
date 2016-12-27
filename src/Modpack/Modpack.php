@@ -1,8 +1,8 @@
 <?php
 
-namespace TechnicPack\SolderClient\Modpack;
+namespace TechnicPack\Modpack;
 
-use TechnicPack\SolderClient\SolderClient;
+use TechnicPack\SolderClient;
 
 class Modpack
 {

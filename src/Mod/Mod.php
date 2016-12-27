@@ -1,6 +1,6 @@
 <?php
 
-namespace TechnicPack\SolderClient\Mod;
+namespace TechnicPack\Mod;
 
 class Mod
 {
