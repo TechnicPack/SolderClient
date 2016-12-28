@@ -58,7 +58,7 @@ class SolderClient
     private function handle($uri)
     {
         try {
-            $response = $this->client->get($uri);
+            $response = $this->client->get($uri . $this->key);
         } catch (RequestException $e) {
             throw new ConnectionException('Request to \'' . $uri . '\' failed.', $e->getCode(), RequestException::class);
         }
@@ -82,9 +82,9 @@ class SolderClient
 
     public function getModpacks($recursive = false)
     {
-        $uri = 'modpack?k=' . $this->key;
+        $uri = 'modpack?k=';
         if ($recursive) {
-            $uri = 'modpack?include=full&k=' . $this->key;
+            $uri = 'modpack?include=full&k=';
         }
 
         $modpacks = $this->handle($uri)['modpacks'];
@@ -107,7 +107,7 @@ class SolderClient
 
     public function getModpack($modpack)
     {
-        $uri = 'modpack/'.$modpack;
+        $uri = 'modpack/'.$modpack.'?k=';
         $response = $this->handle($uri);
 
         if (array_key_exists('error', $response) || array_key_exists('status', $response))
@@ -123,7 +123,7 @@ class SolderClient
 
     public function getBuild($modpack, $build)
     {
-        $uri = 'modpack/'.$modpack.'/'.$build.'?include=mods';
+        $uri = 'modpack/'.$modpack.'/'.$build.'?include=mods&k=';
         $response = $this->handle($uri);
 
         if (array_key_exists('error', $response) || array_key_exists('status', $response))
