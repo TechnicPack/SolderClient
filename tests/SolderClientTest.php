@@ -35,6 +35,19 @@ class ClientTest extends TestCase
         SolderClient::factory('http://localhost/api/', 'C3gy35Um2pBE97xn90z0sUNhH1KbzI', [], $handler);
     }
 
+    public function testInternalServerError()
+    {
+
+        $mock = new MockHandler([
+            new Response(503, ['Content-Length' => 0], ''),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $this->expectException(ConnectionException::class);
+        SolderClient::factory('http://localhost/api/', 'C3gy35Um2pBE97xn90z0sUNhH1KbzI', [], $handler);
+    }
+
     public function testSolderNotFound()
     {
         $mock = new MockHandler([

@@ -157,7 +157,7 @@ class SolderClient
         try {
             $response = $client->get('verify/' . $key);
         } catch (RequestException $e) {
-            throw new ConnectionException($e->getMessage());
+            throw new ConnectionException('Request to verify Solder API failed. HTTP returned ' . $e->getResponse()->getStatusCode());
         }
 
         $body = $response->getBody();
