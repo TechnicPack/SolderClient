@@ -22,7 +22,7 @@ class SolderClient
     /** @var Client */
     private $client;
 
-    const VERSION = '1.1.0';
+    const VERSION = '0.1.0';
 
     public static function factory($url, $key, $headers = [], $handler = null, $timeout = 3)
     {
@@ -176,6 +176,6 @@ class SolderClient
 
     private static function setupAgent()
     {
-        return 'TechnicSolder/' . self::VERSION;
+        return 'SolderClient/' . self::VERSION;
     }
 }
