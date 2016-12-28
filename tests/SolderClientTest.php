@@ -1,13 +1,14 @@
 <?php
 
-namespace TechnicPack\Tests;
+namespace TechnicPack\SolderClient\Tests;
 
-use TechnicPack\Exception\BadJSONException;
-use TechnicPack\Exception\ConnectionException;
-use TechnicPack\Exception\InvalidURLException;
-use TechnicPack\Exception\ResourceException;
-use TechnicPack\Exception\UnauthorizedException;
-use TechnicPack\SolderClient;
+use TechnicPack\SolderClient\Exception\BadJSONException;
+use TechnicPack\SolderClient\Exception\ConnectionException;
+use TechnicPack\SolderClient\Exception\InvalidURLException;
+use TechnicPack\SolderClient\Exception\ResourceException;
+use TechnicPack\SolderClient\Exception\UnauthorizedException;
+use TechnicPack\SolderClient\SolderClient;
+
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;

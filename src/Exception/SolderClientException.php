@@ -1,5 +1,5 @@
 <?php
 
-namespace TechnicPack\Exception;
+namespace TechnicPack\SolderClient\Exception;
 
 interface SolderClientException {}

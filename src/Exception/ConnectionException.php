@@ -1,5 +1,5 @@
 <?php
 
-namespace TechnicPack\Exception;
+namespace TechnicPack\SolderClient\Exception;
 
 class ConnectionException extends \Exception implements SolderClientException {}

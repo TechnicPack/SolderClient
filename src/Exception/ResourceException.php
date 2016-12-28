@@ -1,5 +1,5 @@
 <?php
 
-namespace TechnicPack\Exception;
+namespace TechnicPack\SolderClient\Exception;
 
 class ResourceException extends \Exception implements SolderClientException {}

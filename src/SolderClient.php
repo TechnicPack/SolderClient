@@ -1,15 +1,14 @@
 <?php
 
-namespace TechnicPack;
+namespace TechnicPack\SolderClient;
 
-use TechnicPack\Exception\BadJSONException;
-use TechnicPack\Exception\ConnectionException;
-use TechnicPack\Exception\ResourceException;
-use TechnicPack\Resources\Modpack;
-use TechnicPack\Resources\Build;
-
-use TechnicPack\Exception\InvalidURLException;
-use TechnicPack\Exception\UnauthorizedException;
+use TechnicPack\SolderClient\Exception\BadJSONException;
+use TechnicPack\SolderClient\Exception\ConnectionException;
+use TechnicPack\SolderClient\Exception\ResourceException;
+use TechnicPack\SolderClient\Exception\InvalidURLException;
+use TechnicPack\SolderClient\Exception\UnauthorizedException;
+use TechnicPack\SolderClient\Resources\Modpack;
+use TechnicPack\SolderClient\Resources\Build;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;

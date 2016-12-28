@@ -1,5 +1,5 @@
 <?php
 
-namespace TechnicPack\Exception;
+namespace TechnicPack\SolderClient\Exception;
 
 class UnauthorizedException extends \Exception implements SolderClientException {}
