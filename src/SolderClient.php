@@ -60,7 +60,7 @@ class SolderClient
         try {
             $response = $this->client->get($uri);
         } catch (RequestException $e) {
-            throw new ConnectionException($e->getMessage(), $e->getCode(), RequestException::class);
+            throw new ConnectionException('Request to \'' . $uri . '\' failed.', $e->getCode(), RequestException::class);
         }
 
         $status_code = $response->getStatusCode();
