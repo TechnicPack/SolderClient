@@ -1,6 +1,6 @@
 <?php
 
-namespace TechnicPack\Mod;
+namespace TechnicPack\Resources;
 
 class Mod
 {

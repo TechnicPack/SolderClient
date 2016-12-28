@@ -2,10 +2,11 @@
 
 namespace TechnicPack;
 
-use TechnicPack\Exception\BadJsonException;
+use TechnicPack\Exception\BadJSONException;
 use TechnicPack\Exception\ConnectionException;
-use TechnicPack\Modpack\Modpack;
-use TechnicPack\Modpack\Build;
+use TechnicPack\Exception\ResourceException;
+use TechnicPack\Resources\Modpack;
+use TechnicPack\Resources\Build;
 
 use TechnicPack\Exception\InvalidURLException;
 use TechnicPack\Exception\UnauthorizedException;
@@ -35,7 +36,7 @@ class SolderClient
             $client = new Client(['base_uri' => $url, 'timeout' => $timeout, 'headers' => $headers, 'handler' => $handler]);
 
         if (!self::validateKey($client, $key)) {
-            throw new UnauthorizedException('Key failed to validate.');
+            throw new UnauthorizedException('Key failed to validate.', 403);
         }
 
         $properties = array(
@@ -59,22 +60,24 @@ class SolderClient
         try {
             $response = $this->client->get($uri);
         } catch (RequestException $e) {
-            throw new ConnectionException($e->getMessage());
+            throw new ConnectionException($e->getMessage(), $e->getCode(), RequestException::class);
         }
 
-        $result = [];
-        $result['status_code'] = $response->getStatusCode();
-        $result['reason'] = $response->getReasonPhrase();
+        $status_code = $response->getStatusCode();
+        $reason = $response->getReasonPhrase();
+
+        if ($status_code >= 300) {
+            throw new ConnectionException('Request to \'' . $uri . '\' failed.' . $reason, $status_code);
+        }
 
         $body = $response->getBody();
         $json = json_decode($body, true);
 
-        if(!$json){
-            throw new BadJsonException('Failed to decode JSON');
+        if (!$json){
+            throw new BadJSONException('Failed to decode JSON for \''. $uri, 500);
         }
 
-        $results['json'] = $json;
-        return $results;
+        return $json;
     }
 
     public function getModpacks($recursive = false)
@@ -84,8 +87,7 @@ class SolderClient
             $uri = 'modpack?include=full&k=' . $this->key;
         }
 
-        $response = $this->handle($uri);
-        $modpacks = $response['json']['modpacks'];
+        $modpacks = $this->handle($uri)['modpacks'];
         $result = [];
 
         if ($recursive) {
@@ -108,6 +110,14 @@ class SolderClient
         $uri = 'modpack/'.$modpack;
         $response = $this->handle($uri);
 
+        if (array_key_exists('error', $response) || array_key_exists('status', $response))
+        {
+            if ($response['error'] == 'Modpack does not exist' || $response['status'] == '404') {
+                throw new ResourceException('Modpack does not exist', 404);
+            } else if ($response['error'] == 'You are not authorized to view this modpack.' || $response['status'] == '401') {
+                throw new UnauthorizedException('You are not authorized to view this modpack.', 401);
+            }
+        }
         return new Modpack($response);
     }
 
@@ -115,6 +125,15 @@ class SolderClient
     {
         $uri = 'modpack/'.$modpack.'/'.$build.'?include=mods';
         $response = $this->handle($uri);
+
+        if (array_key_exists('error', $response) || array_key_exists('status', $response))
+        {
+            if ($response['error'] == 'Build does not exist' || $response['status'] == '404') {
+                throw new ResourceException('Build does not exist', 404);
+            } else if ($response['error'] == 'You are not authorized to view this build.' || $response['status'] == '401') {
+                throw new UnauthorizedException('You are not authorized to view this build.', 401);
+            }
+        }
 
         return new Build($response);
     }
@@ -149,7 +168,7 @@ class SolderClient
                 return true;
             }
         } else {
-            throw new BadJsonException('Failed to decode JSON');
+            throw new BadJSONException('Failed to decode JSON response when verifying API key');
         }
 
         return false;
