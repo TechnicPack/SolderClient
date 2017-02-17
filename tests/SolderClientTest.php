@@ -229,4 +229,10 @@ class ClientTest extends TestCase
         $this->assertTrue(array_key_exists('memory', $build));
         $this->assertTrue(array_key_exists('mods', $build));
     }
+
+    public function testBadPack()
+    {
+        $this->expectException(ConnectionException::class);
+        $client = SolderClient::factory('http://solder.example.net/api/', '', [], []);
+    }
 }

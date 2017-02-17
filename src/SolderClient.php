@@ -59,7 +59,7 @@ class SolderClient
         try {
             $response = $this->client->get($uri . $this->key);
         } catch (RequestException $e) {
-            throw new ConnectionException('Request to \'' . $uri . '\' failed.', $e->getCode(), RequestException::class);
+            throw new ConnectionException('Request to \'' . $uri . '\' failed.', $e->getMessage(), RequestException::class);
         }
 
         $status_code = $response->getStatusCode();
@@ -156,7 +156,11 @@ class SolderClient
         try {
             $response = $client->get('verify/' . $key);
         } catch (RequestException $e) {
-            throw new ConnectionException('Request to verify Solder API failed. HTTP returned ' . $e->getResponse()->getStatusCode());
+            if ($e->hasResponse()) {
+                throw new ConnectionException('Request to verify Solder API failed. Solder API returned HTTP code ' . $e->getResponse()->getStatusCode());
+            } else {
+                throw new ConnectionException('Request to verify Solder API failed. Solder API returned ' . $e->getMessage());
+            }
         }
 
         $body = $response->getBody();
