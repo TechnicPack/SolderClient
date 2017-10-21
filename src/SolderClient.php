@@ -81,9 +81,10 @@ class SolderClient
 
     public function getModpacks($recursive = false)
     {
-        $uri = 'modpack?k=';
         if ($recursive) {
             $uri = 'modpack?include=full&k=';
+        } else {
+            $uri = 'modpack?k=';
         }
 
         $response = $this->handle($uri);
