@@ -122,6 +122,8 @@ class SolderClient
                 throw new ResourceException('Modpack does not exist', 404);
             } else if ($response['error'] == 'You are not authorized to view this modpack.' || $response['status'] == '401') {
                 throw new UnauthorizedException('You are not authorized to view this modpack.', 401);
+            } else {
+                throw new ResourceException('Got an unexpected response from Solder', 500);
             }
         }
         return new Modpack($response);
@@ -138,6 +140,8 @@ class SolderClient
                 throw new ResourceException('Build does not exist', 404);
             } else if ($response['error'] == 'You are not authorized to view this build.' || $response['status'] == '401') {
                 throw new UnauthorizedException('You are not authorized to view this build.', 401);
+            } else {
+                throw new ResourceException('Got an unexpected response from Solder', 500);
             }
         }
 
