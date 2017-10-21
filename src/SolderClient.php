@@ -39,9 +39,9 @@ class SolderClient
         }
 
         $properties = array(
-                    "url" => $url,
-                    "key" => $key,
-            );
+            "url" => $url,
+            "key" => $key,
+        );
 
         return new SolderClient($client, $properties);
     }
