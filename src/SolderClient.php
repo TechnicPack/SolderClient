@@ -72,8 +72,8 @@ class SolderClient
         $body = $response->getBody();
         $json = json_decode($body, true);
 
-        if (!$json){
-            throw new BadJSONException('Failed to decode JSON for \''. $uri, 500);
+        if ($json === null){
+            throw new BadJSONException('Failed to decode JSON for \''. $uri . '\'', 500);
         }
 
         return $json;
