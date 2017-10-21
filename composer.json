@@ -15,6 +15,12 @@
       "email": "genpage@technicpack.net",
       "homepage": "http://www.technicpack.net",
       "role": "Developer"
+    },
+    {
+      "name": "Pedro Cunha",
+      "email": "pyker@technicpack.net",
+      "homepage": "http://www.technicpack.net",
+      "role": "Developer"
     }],
   "require": {
     "php": ">=5.5.0",
