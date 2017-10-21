@@ -1,8 +1,8 @@
 {
-  "name": "technicpack/solderclient",
+  "name": "TechnicPack/SolderClient",
   "type": "library",
   "description": "PHP Library to communicate with Technic Solder",
-  "homepage": "https://github.com/Technic/SolderClient",
+  "homepage": "https://github.com/TechnicPack/SolderClient",
   "license": "MIT",
   "authors": [{
     "name": "Ryan Cohen",
