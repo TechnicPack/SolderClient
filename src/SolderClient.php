@@ -86,7 +86,13 @@ class SolderClient
             $uri = 'modpack?include=full&k=';
         }
 
-        $modpacks = $this->handle($uri)['modpacks'];
+        $response = $this->handle($uri);
+
+        if (!is_array($response) || !array_key_exists('modpacks', $response) || !is_array($response['modpacks'])) {
+            throw new ResourceException('Got an unexpected response from Solder', 500);
+        }
+
+        $modpacks = $response['modpacks'];
         $result = [];
 
         if ($recursive) {
