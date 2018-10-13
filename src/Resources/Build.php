@@ -19,5 +19,9 @@ class Build
 		foreach ($properties['mods'] as $mod) {
 			array_push($this->mods, new Mod($mod));
 		}
+
+		usort($this->mods, function ($a, $b) {
+			return strcasecmp($a->pretty_name, $b->pretty_name);
+		});
 	}
 }
