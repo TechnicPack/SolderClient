@@ -1,5 +1,5 @@
 {
-  "name": "TechnicPack/SolderClient",
+  "name": "technicpack/solderclient",
   "type": "library",
   "description": "PHP Library to communicate with Technic Solder",
   "homepage": "https://github.com/TechnicPack/SolderClient",
@@ -7,19 +7,19 @@
   "authors": [{
     "name": "Ryan Cohen",
     "email": "sct@technicpack.net",
-    "homepage": "http://www.technicpack.net",
+    "homepage": "https://www.technicpack.net",
     "role": "Developer"
     },
     {
       "name": "Dylan Page",
       "email": "genpage@technicpack.net",
-      "homepage": "http://www.technicpack.net",
+      "homepage": "https://www.technicpack.net",
       "role": "Developer"
     },
     {
       "name": "Pedro Cunha",
       "email": "pyker@technicpack.net",
-      "homepage": "http://www.technicpack.net",
+      "homepage": "https://www.technicpack.net",
       "role": "Developer"
     }],
   "require": {
