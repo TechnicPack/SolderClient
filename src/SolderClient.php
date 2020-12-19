@@ -9,6 +9,7 @@ use TechnicPack\SolderClient\Exception\InvalidURLException;
 use TechnicPack\SolderClient\Exception\UnauthorizedException;
 use TechnicPack\SolderClient\Resources\Modpack;
 use TechnicPack\SolderClient\Resources\Build;
+use TechnicPack\SolderClient\Resources\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
@@ -26,7 +27,7 @@ class SolderClient
     public static function factory($url, $key, $headers = [], $handler = null, $timeout = 3)
     {
         $client = null;
-        $url = self::validateUrl($url);
+        $url = rtrim($url, '/').'/';
         if (!$headers)
             $headers = ['User-Agent' => self::setupAgent()];
         if (!$handler)
@@ -146,6 +147,13 @@ class SolderClient
         }
 
         return new Build($response);
+    }
+
+    public function getApi()
+    {
+        $response = $this->handle('/');
+
+        return new Api($response);
     }
 
     public static function validateUrl($url)
