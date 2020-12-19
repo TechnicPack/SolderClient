@@ -1,17 +1,24 @@
+dist: focal
 language: php
-dist: xenial
 cache:
   directories:
     - $HOME/.composer/cache
 php:
   - 7.0
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4
 env:
   global:
     - APP_ENV='testing'
+  matrix:
+    - PREFER_LOWEST='--prefer-lowest'
+    - PREFER_LOWEST=''
 sudo: false
 before_install:
   - echo $REPO
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   - composer self-update
-install: travis_retry composer install --prefer-source --no-interaction
+install: travis_retry composer install --no-interaction $PREFER_LOWEST
 script: vendor/bin/phpunit --verbose

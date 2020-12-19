@@ -11,7 +11,7 @@ use TechnicPack\SolderClient\Resources\Modpack;
 use TechnicPack\SolderClient\Resources\Build;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\TransferException;
 
 
 class SolderClient
@@ -58,7 +58,7 @@ class SolderClient
     {
         try {
             $response = $this->client->get($uri . $this->key);
-        } catch (RequestException $e) {
+        } catch (TransferException $e) {
             throw new ConnectionException('Request to \'' . $uri . '\' failed. ' . $e->getMessage(), 0, $e);
         }
 
@@ -166,8 +166,8 @@ class SolderClient
     {
         try {
             $response = $client->get('verify/' . $key);
-        } catch (RequestException $e) {
-            if ($e->hasResponse()) {
+        } catch (TransferException $e) {
+            if (method_exists($e, 'hasResponse') && $e->hasResponse()) {
                 throw new ConnectionException('Request to verify Solder API failed. Solder API returned HTTP code ' . $e->getResponse()->getStatusCode(), 0, $e);
             } else {
                 throw new ConnectionException('Request to verify Solder API failed. Solder API returned ' . $e->getMessage(), 0, $e);
