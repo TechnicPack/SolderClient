@@ -103,7 +103,7 @@ class ClientTest extends TestCase
         $modpacks = $client->getModpacks();
 
         $this->assertEquals(2, count($modpacks));
-        $this->assertTrue(array_key_exists('hexxit', $modpacks));
+        $this->assertArrayHasKey('hexxit', $modpacks);
     }
 
     public function testMalformedGetModpacks1()
@@ -188,17 +188,17 @@ class ClientTest extends TestCase
 
         $modpack = $client->getModpack('hexxit');
 
-        $this->assertTrue(array_key_exists('name', $modpack));
-        $this->assertTrue(array_key_exists('display_name', $modpack));
-        $this->assertTrue(array_key_exists('url', $modpack));
-        $this->assertTrue(array_key_exists('icon', $modpack));
-        $this->assertTrue(array_key_exists('icon_md5', $modpack));
-        $this->assertTrue(array_key_exists('logo', $modpack));
-        $this->assertTrue(array_key_exists('logo_md5', $modpack));
-        $this->assertTrue(array_key_exists('background', $modpack));
-        $this->assertTrue(array_key_exists('recommended', $modpack));
-        $this->assertTrue(array_key_exists('latest', $modpack));
-        $this->assertTrue(array_key_exists('builds', $modpack));
+        $this->assertObjectHasAttribute('name', $modpack);
+        $this->assertObjectHasAttribute('display_name', $modpack);
+        $this->assertObjectHasAttribute('url', $modpack);
+        $this->assertObjectHasAttribute('icon', $modpack);
+        $this->assertObjectHasAttribute('icon_md5', $modpack);
+        $this->assertObjectHasAttribute('logo', $modpack);
+        $this->assertObjectHasAttribute('logo_md5', $modpack);
+        $this->assertObjectHasAttribute('background', $modpack);
+        $this->assertObjectHasAttribute('recommended', $modpack);
+        $this->assertObjectHasAttribute('latest', $modpack);
+        $this->assertObjectHasAttribute('builds', $modpack);
     }
 
     public function testGetBuildDoesNotExist()
@@ -253,11 +253,11 @@ class ClientTest extends TestCase
 
         $build = $client->getBuild('hexxit', '1.0.1');
 
-        $this->assertTrue(array_key_exists('minecraft', $build));
-        $this->assertTrue(array_key_exists('forge', $build));
-        $this->assertTrue(array_key_exists('java', $build));
-        $this->assertTrue(array_key_exists('memory', $build));
-        $this->assertTrue(array_key_exists('mods', $build));
+        $this->assertObjectHasAttribute('minecraft', $build);
+        $this->assertObjectHasAttribute('forge', $build);
+        $this->assertObjectHasAttribute('java', $build);
+        $this->assertObjectHasAttribute('memory', $build);
+        $this->assertObjectHasAttribute('mods', $build);
     }
 
     public function testBadPack()
