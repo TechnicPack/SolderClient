@@ -1,11 +1,10 @@
 os: linux
-dist: focal
+dist: bionic
 language: php
 cache:
   directories:
     - $HOME/.composer/cache
 php:
-  - 7.0
   - 7.1
   - 7.2
   - 7.3
