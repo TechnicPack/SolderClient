@@ -20,5 +20,6 @@ before_install:
   - echo $REPO
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   - composer self-update
-install: travis_retry composer install --no-interaction $PREFER_LOWEST
+install:
+  - if [ -z "$PREFER_LOWEST" ]; then travis_retry composer install; else travis_retry composer update $PREFER_LOWEST; fi
 script: vendor/bin/phpunit --verbose
