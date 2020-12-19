@@ -1,3 +1,4 @@
+os: linux
 dist: focal
 language: php
 cache:
@@ -12,10 +13,9 @@ php:
 env:
   global:
     - APP_ENV='testing'
-  matrix:
+  jobs:
     - PREFER_LOWEST='--prefer-lowest'
     - PREFER_LOWEST=''
-sudo: false
 before_install:
   - echo $REPO
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
