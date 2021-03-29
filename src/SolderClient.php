@@ -127,7 +127,8 @@ class SolderClient
             throw new ResourceException('Got an unexpected response from Solder', 500);
         }
 
-        return new Modpack($response);    }
+        return new Modpack($response);
+    }
 
     public function getBuild($modpack, $build)
     {
