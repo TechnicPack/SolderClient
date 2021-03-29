@@ -2,16 +2,15 @@
 
 namespace TechnicPack\SolderClient;
 
-use TechnicPack\SolderClient\Exception\BadJSONException;
-use TechnicPack\SolderClient\Exception\ConnectionException;
-use TechnicPack\SolderClient\Exception\ResourceException;
-use TechnicPack\SolderClient\Exception\InvalidURLException;
-use TechnicPack\SolderClient\Exception\UnauthorizedException;
-use TechnicPack\SolderClient\Resources\Modpack;
-use TechnicPack\SolderClient\Resources\Build;
-
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
+use TechnicPack\SolderClient\Exception\BadJSONException;
+use TechnicPack\SolderClient\Exception\ConnectionException;
+use TechnicPack\SolderClient\Exception\InvalidURLException;
+use TechnicPack\SolderClient\Exception\ResourceException;
+use TechnicPack\SolderClient\Exception\UnauthorizedException;
+use TechnicPack\SolderClient\Resources\Build;
+use TechnicPack\SolderClient\Resources\Modpack;
 
 
 class SolderClient
@@ -27,12 +26,14 @@ class SolderClient
     {
         $client = null;
         $url = self::validateUrl($url);
-        if (!$headers)
+        if (!$headers) {
             $headers = ['User-Agent' => self::setupAgent()];
-        if (!$handler)
+        }
+        if (!$handler) {
             $client = new Client(['base_uri' => $url, 'timeout' => $timeout, 'headers' => $headers]);
-        else
+        } else {
             $client = new Client(['base_uri' => $url, 'timeout' => $timeout, 'headers' => $headers, 'handler' => $handler]);
+        }
 
         if (!self::validateKey($client, $key)) {
             throw new UnauthorizedException('Key failed to validate.', 403);
@@ -72,8 +73,8 @@ class SolderClient
         $body = $response->getBody();
         $json = json_decode($body, true);
 
-        if ($json === null){
-            throw new BadJSONException('Failed to decode JSON for \''. $uri . '\'', 500);
+        if ($json === null) {
+            throw new BadJSONException('Failed to decode JSON for \'' . $uri . '\'', 500);
         }
 
         return $json;
@@ -113,7 +114,7 @@ class SolderClient
 
     public function getModpack($modpack)
     {
-        $uri = 'modpack/'.$modpack.'?k=';
+        $uri = 'modpack/' . $modpack . '?k=';
         $response = $this->handle($uri);
 
         if (array_key_exists('error', $response) || array_key_exists('status', $response)) {
@@ -126,12 +127,11 @@ class SolderClient
             throw new ResourceException('Got an unexpected response from Solder', 500);
         }
 
-        return new Modpack($response);
-    }
+        return new Modpack($response);    }
 
     public function getBuild($modpack, $build)
     {
-        $uri = 'modpack/'.$modpack.'/'.$build.'?include=mods&k=';
+        $uri = 'modpack/' . $modpack . '/' . $build . '?include=mods&k=';
         $response = $this->handle($uri);
 
         if (array_key_exists('error', $response) || array_key_exists('status', $response)) {
@@ -155,7 +155,7 @@ class SolderClient
         }
 
         if (preg_match("/\/api$/", $url)) {
-            $url = $url.'/';
+            $url = $url . '/';
         }
 
         return $url;

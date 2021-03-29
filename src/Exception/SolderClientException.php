@@ -2,4 +2,6 @@
 
 namespace TechnicPack\SolderClient\Exception;
 
-interface SolderClientException {}
+interface SolderClientException
+{
+}
