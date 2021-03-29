@@ -116,16 +116,16 @@ class SolderClient
         $uri = 'modpack/'.$modpack.'?k=';
         $response = $this->handle($uri);
 
-        if (array_key_exists('error', $response) || array_key_exists('status', $response))
-        {
-            if ($response['error'] == 'Modpack does not exist' || $response['status'] == '404') {
+        if (array_key_exists('error', $response) || array_key_exists('status', $response)) {
+            if (($response['error'] ?? null) == 'Modpack does not exist' || ($response['status'] ?? null) == '404') {
                 throw new ResourceException('Modpack does not exist', 404);
-            } else if ($response['error'] == 'You are not authorized to view this modpack.' || $response['status'] == '401') {
-                throw new UnauthorizedException('You are not authorized to view this modpack.', 401);
-            } else {
-                throw new ResourceException('Got an unexpected response from Solder', 500);
             }
+            if (($response['error'] ?? null) == 'You are not authorized to view this modpack.' || ($response['status'] ?? null) == '401') {
+                throw new UnauthorizedException('You are not authorized to view this modpack.', 401);
+            }
+            throw new ResourceException('Got an unexpected response from Solder', 500);
         }
+
         return new Modpack($response);
     }
 
@@ -134,15 +134,14 @@ class SolderClient
         $uri = 'modpack/'.$modpack.'/'.$build.'?include=mods&k=';
         $response = $this->handle($uri);
 
-        if (array_key_exists('error', $response) || array_key_exists('status', $response))
-        {
-            if ($response['error'] == 'Build does not exist' || $response['status'] == '404') {
+        if (array_key_exists('error', $response) || array_key_exists('status', $response)) {
+            if (($response['error'] ?? null) == 'Build does not exist' || ($response['status'] ?? null) == '404') {
                 throw new ResourceException('Build does not exist', 404);
-            } else if ($response['error'] == 'You are not authorized to view this build.' || $response['status'] == '401') {
-                throw new UnauthorizedException('You are not authorized to view this build.', 401);
-            } else {
-                throw new ResourceException('Got an unexpected response from Solder', 500);
             }
+            if (($response['error'] ?? null) == 'You are not authorized to view this build.' || ($response['status'] ?? null) == '401') {
+                throw new UnauthorizedException('You are not authorized to view this build.', 401);
+            }
+            throw new ResourceException('Got an unexpected response from Solder', 500);
         }
 
         return new Build($response);
