@@ -177,12 +177,12 @@ class SolderClient
         $body = $response->getBody();
         $json = json_decode($body, true);
 
-        if ($json) {
-            if (array_key_exists("valid", $json)) {
-                return true;
-            }
-        } else {
+        if (!$json) {
             throw new BadJSONException('Failed to decode JSON response when verifying API key');
+        }
+
+        if (array_key_exists("valid", $json)) {
+            return true;
         }
 
         return false;
