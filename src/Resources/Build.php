@@ -6,7 +6,6 @@ class Build
 {
     public $id;
     public $minecraft;
-    public $minecraft_md5;
     public $java;
     public $memory;
     public $forge;

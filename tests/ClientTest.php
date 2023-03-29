@@ -174,7 +174,7 @@ class ClientTest extends TestCase
 
     public function testGetModpack()
     {
-        $body = '{"name":"hexxit","display_name":"Hexxit","url":null,"icon":null,"icon_md5":"fb51fd408d5d3bc7eba8d9a820ab555c","logo":null,"logo_md5":"1426f5b19df42eab2cabbaa34823c8c9","background":null,"background_md5":"a99b0c0eb00ac657d29eb9e1f9086033","recommended":"1.0.10","latest":"1.0.10","builds":["1.0.0","1.0.1","1.0.3","1.0.4","1.0.5","1.0.6","1.0.7","1.0.8","1.0.9","1.0.10","2.0.0","2.0.1","2.0.1b","2.0.1c"]}';
+        $body = '{"name":"hexxit","display_name":"Hexxit","url":null,"icon":null,"logo":null,"background":null,"recommended":"1.0.10","latest":"1.0.10","builds":["1.0.0","1.0.1","1.0.3","1.0.4","1.0.5","1.0.6","1.0.7","1.0.8","1.0.9","1.0.10","2.0.0","2.0.1","2.0.1b","2.0.1c"]}';
 
         // Create a mock and queue two responses.
         $mock = new MockHandler([
@@ -192,9 +192,7 @@ class ClientTest extends TestCase
         $this->assertObjectHasAttribute('display_name', $modpack);
         $this->assertObjectHasAttribute('url', $modpack);
         $this->assertObjectHasAttribute('icon', $modpack);
-        $this->assertObjectHasAttribute('icon_md5', $modpack);
         $this->assertObjectHasAttribute('logo', $modpack);
-        $this->assertObjectHasAttribute('logo_md5', $modpack);
         $this->assertObjectHasAttribute('background', $modpack);
         $this->assertObjectHasAttribute('recommended', $modpack);
         $this->assertObjectHasAttribute('latest', $modpack);
