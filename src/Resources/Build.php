@@ -4,8 +4,12 @@ namespace TechnicPack\SolderClient\Resources;
 
 class Build
 {
+    public $id;
     public $minecraft;
     public $minecraft_md5;
+    public $java;
+    public $memory;
+    public $forge;
     public $mods = [];
 
     public function __construct($properties)
