@@ -13,18 +13,20 @@ class Build
 
     public function __construct($properties)
     {
-        foreach ($properties as $key => $val) {
-            if ($key != "mods") {
-                $this->{$key} = $val;
+        foreach (get_object_vars($this) as $key => $val) {
+            if ($key !== "mods") {
+                $this->{$key} = $properties[$key] ?? null;
             }
         }
 
-        foreach ($properties['mods'] as $mod) {
-            array_push($this->mods, new Mod($mod));
-        }
+        if (isset($properties['mods'])) {
+            foreach ($properties['mods'] as $mod) {
+                $this->mods[] = new Mod($mod);
+            }
 
-        usort($this->mods, function ($a, $b) {
-            return strcasecmp($a->pretty_name, $b->pretty_name);
-        });
+            usort($this->mods, function ($a, $b) {
+                return strcasecmp($a->pretty_name, $b->pretty_name);
+            });
+        }
     }
 }

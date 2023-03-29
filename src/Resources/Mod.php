@@ -17,8 +17,8 @@ class Mod
 
     public function __construct($properties)
     {
-        foreach ($properties as $key => $val) {
-            $this->{$key} = $val;
+        foreach (get_object_vars($this) as $key => $val) {
+            $this->{$key} = $properties[$key] ?? null;
         }
     }
 }

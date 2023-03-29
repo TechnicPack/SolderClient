@@ -102,7 +102,7 @@ class ClientTest extends TestCase
 
         $modpacks = $client->getModpacks();
 
-        $this->assertEquals(2, count($modpacks));
+        $this->assertCount(2, $modpacks);
         $this->assertArrayHasKey('hexxit', $modpacks);
     }
 
@@ -188,15 +188,15 @@ class ClientTest extends TestCase
 
         $modpack = $client->getModpack('hexxit');
 
-        $this->assertObjectHasAttribute('name', $modpack);
-        $this->assertObjectHasAttribute('display_name', $modpack);
-        $this->assertObjectHasAttribute('url', $modpack);
-        $this->assertObjectHasAttribute('icon', $modpack);
-        $this->assertObjectHasAttribute('logo', $modpack);
-        $this->assertObjectHasAttribute('background', $modpack);
-        $this->assertObjectHasAttribute('recommended', $modpack);
-        $this->assertObjectHasAttribute('latest', $modpack);
-        $this->assertObjectHasAttribute('builds', $modpack);
+        $this->assertTrue(property_exists($modpack, 'name'));
+        $this->assertTrue(property_exists($modpack, 'display_name'));
+        $this->assertTrue(property_exists($modpack, 'url'));
+        $this->assertTrue(property_exists($modpack, 'icon'));
+        $this->assertTrue(property_exists($modpack, 'logo'));
+        $this->assertTrue(property_exists($modpack, 'background'));
+        $this->assertTrue(property_exists($modpack, 'recommended'));
+        $this->assertTrue(property_exists($modpack, 'latest'));
+        $this->assertTrue(property_exists($modpack, 'builds'));
     }
 
     public function testGetBuildDoesNotExist()
@@ -251,11 +251,11 @@ class ClientTest extends TestCase
 
         $build = $client->getBuild('hexxit', '1.0.1');
 
-        $this->assertObjectHasAttribute('minecraft', $build);
-        $this->assertObjectHasAttribute('forge', $build);
-        $this->assertObjectHasAttribute('java', $build);
-        $this->assertObjectHasAttribute('memory', $build);
-        $this->assertObjectHasAttribute('mods', $build);
+        $this->assertTrue(property_exists($build, 'minecraft'));
+        $this->assertTrue(property_exists($build, 'forge'));
+        $this->assertTrue(property_exists($build, 'java'));
+        $this->assertTrue(property_exists($build, 'memory'));
+        $this->assertTrue(property_exists($build, 'mods'));
     }
 
     public function testBadPack()

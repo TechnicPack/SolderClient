@@ -39,20 +39,14 @@ class SolderClient
             throw new UnauthorizedException('Key failed to validate.', 403);
         }
 
-        $properties = array(
-            "url" => $url,
-            "key" => $key,
-        );
-
-        return new SolderClient($client, $properties);
+        return new SolderClient($client, $url, $key);
     }
 
-    protected function __construct($client, $properties)
+    protected function __construct($client, $url, $key)
     {
         $this->client = $client;
-        foreach ($properties as $key => $val) {
-            $this->{$key} = $val;
-        }
+        $this->url = $url;
+        $this->key = $key;
     }
 
     private function handle($uri)

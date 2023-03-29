@@ -13,12 +13,12 @@ class Modpack
     public $background;
     public $recommended;
     public $latest;
-    public $builds = [];
+    public $builds;
 
     public function __construct($properties)
     {
-        foreach ($properties as $key => $val) {
-            $this->{$key} = $val;
+        foreach (get_object_vars($this) as $key => $val) {
+            $this->{$key} = $properties[$key] ?? null;
         }
     }
 }
