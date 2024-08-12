@@ -3,6 +3,7 @@
 namespace TechnicPack\SolderClient;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\TransferException;
 use TechnicPack\SolderClient\Exception\BadJSONException;
 use TechnicPack\SolderClient\Exception\ConnectionException;
@@ -49,26 +50,30 @@ class SolderClient
         $this->key = $key;
     }
 
-    private function handle($uri)
+    private function request($url, $query = [], $useKey = true)
     {
+        if ($useKey) {
+            $query['k'] = $this->key;
+        }
+
         try {
-            $response = $this->client->get($uri . $this->key);
-        } catch (TransferException $e) {
-            throw new ConnectionException('Request to \'' . $uri . '\' failed. ' . $e->getMessage(), 0, $e);
+            $response = $this->client->get($url);
+        } catch (TransferException | GuzzleException $e) {
+            throw new ConnectionException('Request to \'' . $url . '\' failed. ' . $e->getMessage(), 0, $e);
         }
 
         $status_code = $response->getStatusCode();
         $reason = $response->getReasonPhrase();
 
         if ($status_code >= 300) {
-            throw new ConnectionException('Request to \'' . $uri . '\' failed. ' . $reason, $status_code);
+            throw new ConnectionException('Request to \'' . $url . '\' failed. ' . $reason, $status_code);
         }
 
         $body = $response->getBody();
         $json = json_decode($body, true);
 
         if ($json === null) {
-            throw new BadJSONException('Failed to decode JSON for \'' . $uri . '\'', 500);
+            throw new BadJSONException('Failed to decode JSON for \'' . $url . '\'', 500);
         }
 
         return $json;
@@ -76,13 +81,12 @@ class SolderClient
 
     public function getModpacks($recursive = false)
     {
+        $query = [];
         if ($recursive) {
-            $uri = 'modpack?include=full&k=';
-        } else {
-            $uri = 'modpack?k=';
+            $query['include'] = 'full';
         }
 
-        $response = $this->handle($uri);
+        $response = $this->request('modpack', $query);
 
         if (!is_array($response) || !array_key_exists('modpacks', $response) || !is_array($response['modpacks'])) {
             throw new ResourceException('Got an unexpected response from Solder', 500);
@@ -94,7 +98,7 @@ class SolderClient
         if ($recursive) {
             foreach ($modpacks as $modpack) {
                 if (is_array($modpack)) {
-                    array_push($result, new Modpack($modpack));
+                    $result[] = new Modpack($modpack);
                 }
             }
         } else {
@@ -108,8 +112,7 @@ class SolderClient
 
     public function getModpack($modpack)
     {
-        $uri = 'modpack/' . $modpack . '?k=';
-        $response = $this->handle($uri);
+        $response = $this->request('modpack/' . $modpack);
 
         if (array_key_exists('error', $response) || array_key_exists('status', $response)) {
             if (($response['error'] ?? null) == 'Modpack does not exist' || ($response['status'] ?? null) == '404') {
@@ -124,10 +127,9 @@ class SolderClient
         return new Modpack($response);
     }
 
-    public function getBuild($modpack, $build)
+    public function getBuild($modpack, $build, $includePrivate = true)
     {
-        $uri = 'modpack/' . $modpack . '/' . $build . '?include=mods&k=';
-        $response = $this->handle($uri);
+        $response = $this->request('modpack/' . $modpack . '/' . $build, ['include' => 'mods'], useKey: $includePrivate);
 
         if (array_key_exists('error', $response) || array_key_exists('status', $response)) {
             if (($response['error'] ?? null) == 'Build does not exist' || ($response['status'] ?? null) == '404') {
