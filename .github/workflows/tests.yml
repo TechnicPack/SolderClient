@@ -33,6 +33,7 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         extensions: curl
+        ini-values: error_reporting=E_ALL
         tools: composer:v2
         coverage: none
 
@@ -48,9 +49,9 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ matrix.stability }}-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-composer-
+          ${{ runner.os }}-composer-${{ matrix.php }}-${{ matrix.stability }}-
 
     - name: Install dependencies
       uses: nick-fields/retry@v3
