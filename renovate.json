@@ -4,5 +4,11 @@
     "config:best-practices",
     ":separateMajorReleases"
   ],
-  "rangeStrategy": "bump"
+  "rangeStrategy": "bump",
+  "packageRules": [
+    {
+      "matchDepNames": ["php"],
+      "rangeStrategy": "auto"
+    }
+  ]
 }
