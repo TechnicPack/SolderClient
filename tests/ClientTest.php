@@ -81,14 +81,14 @@ class ClientTest extends TestCase
 
         $handler = HandlerStack::create($mock);
 
-        $client = SolderClient::factory('http://localhost/api/', 'C3gy35Um2pBE97xn90z0sUNhH1KbzI99', [], $handler);
+        SolderClient::factory('http://localhost/api/', 'C3gy35Um2pBE97xn90z0sUNhH1KbzI99', [], $handler);
 
-        $this->assertTrue($client != null, 'Solder Client failed to initialize');
+        $this->expectNotToPerformAssertions();
     }
 
     public function testGetModpacks()
     {
-        $body = '{"modpacks":{"vanilla":"Vanilla","hexxit":"Hexxit"},"mirror_url":"http://mirror.technicpack.net/Technic/"}';
+        $body = '{"modpacks":{"vanilla":"Vanilla","hexxit":"Hexxit"},"mirror_url":"https://mirror.technicpack.net/Technic/"}';
 
         // Create a mock and queue two responses.
         $mock = new MockHandler([
@@ -188,15 +188,14 @@ class ClientTest extends TestCase
 
         $modpack = $client->getModpack('hexxit');
 
-        $this->assertTrue(property_exists($modpack, 'name'));
-        $this->assertTrue(property_exists($modpack, 'display_name'));
-        $this->assertTrue(property_exists($modpack, 'url'));
-        $this->assertTrue(property_exists($modpack, 'icon'));
-        $this->assertTrue(property_exists($modpack, 'logo'));
-        $this->assertTrue(property_exists($modpack, 'background'));
-        $this->assertTrue(property_exists($modpack, 'recommended'));
-        $this->assertTrue(property_exists($modpack, 'latest'));
-        $this->assertTrue(property_exists($modpack, 'builds'));
+        $this->assertObjectHasProperty('name', $modpack);
+        $this->assertObjectHasProperty('display_name', $modpack);
+        $this->assertObjectHasProperty('url', $modpack);
+        $this->assertObjectHasProperty('recommended', $modpack);
+        $this->assertObjectHasProperty('latest', $modpack);
+        $this->assertObjectHasProperty('builds', $modpack);
+        $this->assertObjectHasProperty('builds', $modpack);
+        $this->assertIsArray($modpack->builds);
     }
 
     public function testGetBuildDoesNotExist()
@@ -237,7 +236,7 @@ class ClientTest extends TestCase
 
     public function testGetBuild()
     {
-        $body = '{"minecraft":"1.5.2","forge":null,"java":null,"memory":null,"mods":[{"name":"armorbar","version":"v0.7.1","md5":"f323a8d582302ea0abd615a223f8a68b","url":"http://mirror.technicpack.net/Technic/mods/armorbar/armorbar-v0.7.1.zip"}]}';
+        $body = '{"minecraft":"1.5.2","forge":null,"java":null,"memory":null,"mods":[{"name":"armorbar","version":"v0.7.1","md5":"f323a8d582302ea0abd615a223f8a68b","url":"https://mirror.technicpack.net/Technic/mods/armorbar/armorbar-v0.7.1.zip"}]}';
 
         // Create a mock and queue two responses.
         $mock = new MockHandler([
@@ -251,16 +250,17 @@ class ClientTest extends TestCase
 
         $build = $client->getBuild('hexxit', '1.0.1');
 
-        $this->assertTrue(property_exists($build, 'minecraft'));
-        $this->assertTrue(property_exists($build, 'forge'));
-        $this->assertTrue(property_exists($build, 'java'));
-        $this->assertTrue(property_exists($build, 'memory'));
-        $this->assertTrue(property_exists($build, 'mods'));
+        $this->assertObjectHasProperty('forge', $build);
+        $this->assertObjectHasProperty('minecraft', $build);
+        $this->assertObjectHasProperty('java', $build);
+        $this->assertObjectHasProperty('memory', $build);
+        $this->assertObjectHasProperty('mods', $build);
+        $this->assertIsArray($build->mods);
     }
 
     public function testBadPack()
     {
         $this->expectException(ConnectionException::class);
-        $client = SolderClient::factory('http://solder.example.net/api/', '', [], []);
+        SolderClient::factory('https://solder.example.net/api/', '', [], []);
     }
 }

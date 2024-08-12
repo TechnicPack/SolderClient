@@ -16,25 +16,31 @@ use TechnicPack\SolderClient\Resources\Modpack;
 
 class SolderClient
 {
-    public $url;
-    public $key;
-    /** @var Client */
-    private $client;
+    public string $url;
+    public string $key;
+    private Client $client;
 
     const VERSION = '0.5.0';
 
-    public static function factory($url, $key, $headers = [], $handler = null, $timeout = 3)
+    public static function factory($url, $key, $headers = [], $handler = null, $timeout = 3): SolderClient
     {
-        $client = null;
         $url = self::validateUrl($url);
+
         if (!$headers) {
             $headers = ['User-Agent' => self::setupAgent()];
         }
-        if (!$handler) {
-            $client = new Client(['base_uri' => $url, 'timeout' => $timeout, 'headers' => $headers]);
-        } else {
-            $client = new Client(['base_uri' => $url, 'timeout' => $timeout, 'headers' => $headers, 'handler' => $handler]);
+
+        $client_options = [
+            'base_uri' => $url,
+            'timeout' => $timeout,
+            'headers' => $headers,
+        ];
+
+        if ($handler) {
+            $client_options['handler'] = $handler;
         }
+
+        $client = new Client($client_options);
 
         if (!self::validateKey($client, $key)) {
             throw new UnauthorizedException('Key failed to validate.', 403);
@@ -79,7 +85,14 @@ class SolderClient
         return $json;
     }
 
-    public function getModpacks($recursive = false)
+    /**
+     * @param bool $recursive
+     * @return Modpack[]
+     * @throws BadJSONException
+     * @throws ConnectionException
+     * @throws ResourceException
+     */
+    public function getModpacks(bool $recursive = false): array
     {
         $query = [];
         if ($recursive) {
@@ -110,7 +123,7 @@ class SolderClient
         return $result;
     }
 
-    public function getModpack($modpack)
+    public function getModpack($modpack): Modpack
     {
         $response = $this->request('modpack/' . $modpack);
 
@@ -127,7 +140,7 @@ class SolderClient
         return new Modpack($response);
     }
 
-    public function getBuild($modpack, $build, $includePrivate = true)
+    public function getBuild($modpack, $build, $includePrivate = true): Build
     {
         $response = $this->request('modpack/' . $modpack . '/' . $build, ['include' => 'mods'], useKey: $includePrivate);
 
@@ -158,7 +171,7 @@ class SolderClient
         return $url;
     }
 
-    public static function validateKey(Client $client, $key)
+    public static function validateKey(Client $client, $key): bool
     {
         try {
             $response = $client->get('verify/' . $key);
@@ -184,7 +197,7 @@ class SolderClient
         return false;
     }
 
-    private static function setupAgent()
+    private static function setupAgent(): string
     {
         return 'SolderClient/' . self::VERSION;
     }

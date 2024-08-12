@@ -4,12 +4,15 @@ namespace TechnicPack\SolderClient\Resources;
 
 class Build
 {
-    public $id;
-    public $minecraft;
-    public $java;
-    public $memory;
-    public $forge;
-    public $mods = [];
+    public int $id;
+    public string $minecraft;
+    public ?string $java;
+    public ?int $memory;
+    public ?string $forge;
+    /**
+     * @var Mod[] $mods
+     */
+    public array $mods = [];
 
     public function __construct($properties)
     {
@@ -24,7 +27,7 @@ class Build
                 $this->mods[] = new Mod($mod);
             }
 
-            usort($this->mods, function ($a, $b) {
+            usort($this->mods, function (Mod $a, Mod $b) {
                 return strcasecmp($a->pretty_name, $b->pretty_name);
             });
         }

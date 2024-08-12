@@ -4,16 +4,16 @@ namespace TechnicPack\SolderClient\Resources;
 
 class Mod
 {
-    public $id;
-    public $name;
-    public $version;
-    public $md5;
-    public $filesize;
-    public $url;
-    public $pretty_name;
-    public $author;
-    public $description;
-    public $link;
+    public int $id;
+    public string $name;
+    public string $version;
+    public string $md5;
+    public ?int $filesize;
+    public string $url;
+    public string $pretty_name;
+    public ?string $author;
+    public ?string $description;
+    public ?string $link;
 
     public function __construct($properties)
     {
