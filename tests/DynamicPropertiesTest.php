@@ -13,7 +13,6 @@ class DynamicPropertiesTest extends TestCase
     {
         $props = [
             'id' => 1,
-
             'extra' => 'stuff',
         ];
 
@@ -21,6 +20,8 @@ class DynamicPropertiesTest extends TestCase
 
         $this->assertTrue(property_exists($build, 'id'));
         $this->assertFalse(property_exists($build, 'extra'));
+
+        $this->assertEquals(1, $build->id);
     }
 
     public function testMod()
@@ -34,6 +35,8 @@ class DynamicPropertiesTest extends TestCase
 
         $this->assertTrue(property_exists($mod, 'id'));
         $this->assertFalse(property_exists($mod, 'extra'));
+
+        $this->assertEquals(1, $mod->id);
     }
 
     public function testModpack()
@@ -47,5 +50,7 @@ class DynamicPropertiesTest extends TestCase
 
         $this->assertTrue(property_exists($modpack, 'id'));
         $this->assertFalse(property_exists($modpack, 'extra'));
+
+        $this->assertEquals(1, $modpack->id);
     }
 }

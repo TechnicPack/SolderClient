@@ -4,12 +4,12 @@ namespace TechnicPack\SolderClient\Resources;
 
 class Modpack
 {
-    public int $id;
-    public string $name;
-    public string $display_name;
-    public ?string $url;
-    public ?string $recommended;
-    public ?string $latest;
+    public int $id = -1;
+    public string $name = "";
+    public string $display_name = "";
+    public ?string $url = null;
+    public ?string $recommended = null;
+    public ?string $latest = null;
     /**
      * @var Build[] $builds
      */

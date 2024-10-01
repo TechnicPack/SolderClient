@@ -194,8 +194,14 @@ class ClientTest extends TestCase
         $this->assertObjectHasProperty('recommended', $modpack);
         $this->assertObjectHasProperty('latest', $modpack);
         $this->assertObjectHasProperty('builds', $modpack);
-        $this->assertObjectHasProperty('builds', $modpack);
         $this->assertIsArray($modpack->builds);
+
+        $this->assertEquals('hexxit', $modpack->name);
+        $this->assertEquals('Hexxit', $modpack->display_name);
+        $this->assertEquals(null, $modpack->url);
+        $this->assertEquals('1.0.10', $modpack->recommended);
+        $this->assertEquals('1.0.10', $modpack->latest);
+        $this->assertEquals(["1.0.0","1.0.1","1.0.3","1.0.4","1.0.5","1.0.6","1.0.7","1.0.8","1.0.9","1.0.10","2.0.0","2.0.1","2.0.1b","2.0.1c"], $modpack->builds);
     }
 
     public function testGetBuildDoesNotExist()
@@ -256,6 +262,19 @@ class ClientTest extends TestCase
         $this->assertObjectHasProperty('memory', $build);
         $this->assertObjectHasProperty('mods', $build);
         $this->assertIsArray($build->mods);
+
+        $this->assertEquals(null, $build->forge);
+        $this->assertEquals('1.5.2', $build->minecraft);
+        $this->assertEquals(null, $build->java);
+        $this->assertEquals(null, $build->memory);
+
+        $this->assertCount(1, $build->mods);
+
+        $mod = $build->mods[0];
+        $this->assertEquals('armorbar', $mod->name);
+        $this->assertEquals('v0.7.1', $mod->version);
+        $this->assertEquals('f323a8d582302ea0abd615a223f8a68b', $mod->md5);
+        $this->assertEquals('https://mirror.technicpack.net/Technic/mods/armorbar/armorbar-v0.7.1.zip', $mod->url);
     }
 
     public function testBadPack()
