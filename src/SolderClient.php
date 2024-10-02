@@ -63,7 +63,7 @@ class SolderClient
         }
 
         try {
-            $response = $this->client->get($url);
+            $response = $this->client->get($url, ['query' => $query]);
         } catch (TransferException | GuzzleException $e) {
             throw new ConnectionException('Request to \'' . $url . '\' failed. ' . $e->getMessage(), 0, $e);
         }

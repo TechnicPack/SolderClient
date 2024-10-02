@@ -2,6 +2,7 @@
 
 namespace TechnicPack\SolderClient\Tests;
 
+use GuzzleHttp\Middleware;
 use TechnicPack\SolderClient\Exception\BadJSONException;
 use TechnicPack\SolderClient\Exception\ConnectionException;
 use TechnicPack\SolderClient\Exception\InvalidURLException;
@@ -242,7 +243,23 @@ class ClientTest extends TestCase
 
     public function testGetBuild()
     {
-        $body = '{"minecraft":"1.5.2","forge":null,"java":null,"memory":null,"mods":[{"name":"armorbar","version":"v0.7.1","md5":"f323a8d582302ea0abd615a223f8a68b","url":"https://mirror.technicpack.net/Technic/mods/armorbar/armorbar-v0.7.1.zip"}]}';
+        $body = '{
+        "minecraft":"1.5.2",
+        "forge":null,
+        "java":null,
+        "memory":null,
+        "mods":[{
+            "id": 30,
+            "name":"armorbar",
+            "version":"v0.7.1",
+            "md5":"f323a8d582302ea0abd615a223f8a68b",
+            "url":"https://mirror.technicpack.net/Technic/mods/armorbar/armorbar-v0.7.1.zip",
+            "filesize": 25000,
+            "pretty_name": "Armor Bar",
+            "author": "Test",
+            "description": "Test description",
+            "link": "https://example.com/"
+        }]}';
 
         // Create a mock and queue two responses.
         $mock = new MockHandler([
@@ -250,9 +267,12 @@ class ClientTest extends TestCase
             new Response(200, ['Content-Length' => 0], $body),
         ]);
 
-        $handler = HandlerStack::create($mock);
+        $handlerStack = HandlerStack::create($mock);
 
-        $client = SolderClient::factory('http://localhost/api/', 'C3gy35Um2pBE97xn90z0sUNhH1KbzI99', [], $handler);
+        $historyContainer = [];
+        $handlerStack->push(Middleware::history($historyContainer));
+
+        $client = SolderClient::factory('http://localhost/api/', 'C3gy35Um2pBE97xn90z0sUNhH1KbzI99', [], $handlerStack);
 
         $build = $client->getBuild('hexxit', '1.0.1');
 
@@ -271,10 +291,21 @@ class ClientTest extends TestCase
         $this->assertCount(1, $build->mods);
 
         $mod = $build->mods[0];
+        $this->assertEquals(30, $mod->id);
         $this->assertEquals('armorbar', $mod->name);
         $this->assertEquals('v0.7.1', $mod->version);
         $this->assertEquals('f323a8d582302ea0abd615a223f8a68b', $mod->md5);
         $this->assertEquals('https://mirror.technicpack.net/Technic/mods/armorbar/armorbar-v0.7.1.zip', $mod->url);
+        $this->assertEquals(25000, $mod->filesize);
+        $this->assertEquals('Armor Bar', $mod->pretty_name);
+        $this->assertEquals('Test', $mod->author);
+        $this->assertEquals('Test description', $mod->description);
+        $this->assertEquals('https://example.com/', $mod->link);
+
+        // Test if the query parameters are corrects
+        $lastRequest = end($historyContainer);
+        $expectedQuery = http_build_query(['include' => 'mods', 'k' => 'C3gy35Um2pBE97xn90z0sUNhH1KbzI99'], null, '&', PHP_QUERY_RFC3986);
+        $this->assertEquals($expectedQuery, $lastRequest['request']->getUri()->getQuery());
     }
 
     public function testBadPack()
