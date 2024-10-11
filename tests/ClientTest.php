@@ -28,7 +28,7 @@ class ClientTest extends TestCase
     {
 
         $mock = new MockHandler([
-            new Response(200, ['Content-Length' => 0], '{"error": "Key does not exist"}'),
+            new Response(200, [], '{"error": "Key does not exist"}'),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -41,7 +41,7 @@ class ClientTest extends TestCase
     {
 
         $mock = new MockHandler([
-            new Response(503, ['Content-Length' => 0], ''),
+            new Response(503, [], ''),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -53,7 +53,7 @@ class ClientTest extends TestCase
     public function testSolderNotFound()
     {
         $mock = new MockHandler([
-            new Response(404, ['Content-Length' => 0], ''),
+            new Response(404, [], ''),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -65,7 +65,7 @@ class ClientTest extends TestCase
     public function testMalformedJSON()
     {
         $mock = new MockHandler([
-            new Response(200, ['Content-Length' => 0], '{"valid":"Key Validated.""name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
+            new Response(200, [], '{"valid":"Key Validated.""name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -77,7 +77,7 @@ class ClientTest extends TestCase
     public function testClientSetup()
     {
         $mock = new MockHandler([
-            new Response(200, ['Content-Length' => 0], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
+            new Response(200, [], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -93,8 +93,8 @@ class ClientTest extends TestCase
 
         // Create a mock and queue two responses.
         $mock = new MockHandler([
-            new Response(200, ['Content-Length' => 0], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
-            new Response(200, ['Content-Length' => 0], $body),
+            new Response(200, [], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
+            new Response(200, [], $body),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -110,8 +110,8 @@ class ClientTest extends TestCase
     public function testMalformedGetModpacks1()
     {
         $mock = new MockHandler([
-            new Response(200, ['Content-Length' => 0], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
-            new Response(200, ['Content-Length' => 0], '{"modpacks":"invalid"}'),
+            new Response(200, [], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
+            new Response(200, [], '{"modpacks":"invalid"}'),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -125,8 +125,8 @@ class ClientTest extends TestCase
     public function testMalformedGetModpacks2()
     {
         $mock = new MockHandler([
-            new Response(200, ['Content-Length' => 0], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
-            new Response(200, ['Content-Length' => 0], '[]'),
+            new Response(200, [], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
+            new Response(200, [], '[]'),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -143,8 +143,8 @@ class ClientTest extends TestCase
 
         // Create a mock and queue two responses.
         $mock = new MockHandler([
-            new Response(200, ['Content-Length' => 0], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
-            new Response(200, ['Content-Length' => 0], $body),
+            new Response(200, [], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
+            new Response(200, [], $body),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -161,8 +161,8 @@ class ClientTest extends TestCase
 
         // Create a mock and queue two responses.
         $mock = new MockHandler([
-            new Response(200, ['Content-Length' => 0], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
-            new Response(200, ['Content-Length' => 0], $body),
+            new Response(200, [], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
+            new Response(200, [], $body),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -179,8 +179,8 @@ class ClientTest extends TestCase
 
         // Create a mock and queue two responses.
         $mock = new MockHandler([
-            new Response(200, ['Content-Length' => 0], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
-            new Response(200, ['Content-Length' => 0], $body),
+            new Response(200, [], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
+            new Response(200, [], $body),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -211,8 +211,8 @@ class ClientTest extends TestCase
 
         // Create a mock and queue two responses.
         $mock = new MockHandler([
-            new Response(200, ['Content-Length' => 0], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
-            new Response(200, ['Content-Length' => 0], $body),
+            new Response(200, [], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
+            new Response(200, [], $body),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -229,8 +229,8 @@ class ClientTest extends TestCase
 
         // Create a mock and queue two responses.
         $mock = new MockHandler([
-            new Response(200, ['Content-Length' => 0], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
-            new Response(200, ['Content-Length' => 0], $body),
+            new Response(200, [], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
+            new Response(200, [], $body),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -263,8 +263,8 @@ class ClientTest extends TestCase
 
         // Create a mock and queue two responses.
         $mock = new MockHandler([
-            new Response(200, ['Content-Length' => 0], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
-            new Response(200, ['Content-Length' => 0], $body),
+            new Response(200, [], '{"valid":"Key Validated.","name":"SolderClientTest","created_at":"2016-12-26T11:33:46.000Z"}'),
+            new Response(200, [], $body),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
