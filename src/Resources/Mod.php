@@ -6,7 +6,7 @@ class Mod
 {
     public int $id = -1;
     public string $name = "";
-    public string $version = "";
+    public ?string $version = null;
     public string $md5 = "";
     public ?int $filesize = -1;
     public string $url = "";
