@@ -197,12 +197,12 @@ class ClientTest extends TestCase
         $this->assertObjectHasProperty('builds', $modpack);
         $this->assertIsArray($modpack->builds);
 
-        $this->assertEquals('hexxit', $modpack->name);
-        $this->assertEquals('Hexxit', $modpack->display_name);
-        $this->assertEquals(null, $modpack->url);
-        $this->assertEquals('1.0.10', $modpack->recommended);
-        $this->assertEquals('1.0.10', $modpack->latest);
-        $this->assertEquals(["1.0.0","1.0.1","1.0.3","1.0.4","1.0.5","1.0.6","1.0.7","1.0.8","1.0.9","1.0.10","2.0.0","2.0.1","2.0.1b","2.0.1c"], $modpack->builds);
+        $this->assertSame('hexxit', $modpack->name);
+        $this->assertSame('Hexxit', $modpack->display_name);
+        $this->assertSame(null, $modpack->url);
+        $this->assertSame('1.0.10', $modpack->recommended);
+        $this->assertSame('1.0.10', $modpack->latest);
+        $this->assertSame(["1.0.0","1.0.1","1.0.3","1.0.4","1.0.5","1.0.6","1.0.7","1.0.8","1.0.9","1.0.10","2.0.0","2.0.1","2.0.1b","2.0.1c"], $modpack->builds);
     }
 
     public function testGetBuildDoesNotExist()
@@ -283,29 +283,29 @@ class ClientTest extends TestCase
         $this->assertObjectHasProperty('mods', $build);
         $this->assertIsArray($build->mods);
 
-        $this->assertEquals(null, $build->forge);
-        $this->assertEquals('1.5.2', $build->minecraft);
-        $this->assertEquals(null, $build->java);
-        $this->assertEquals(null, $build->memory);
+        $this->assertSame(null, $build->forge);
+        $this->assertSame('1.5.2', $build->minecraft);
+        $this->assertSame(null, $build->java);
+        $this->assertSame(0, $build->memory);
 
         $this->assertCount(1, $build->mods);
 
         $mod = $build->mods[0];
-        $this->assertEquals(30, $mod->id);
-        $this->assertEquals('armorbar', $mod->name);
-        $this->assertEquals('v0.7.1', $mod->version);
-        $this->assertEquals('f323a8d582302ea0abd615a223f8a68b', $mod->md5);
-        $this->assertEquals('https://mirror.technicpack.net/Technic/mods/armorbar/armorbar-v0.7.1.zip', $mod->url);
-        $this->assertEquals(25000, $mod->filesize);
-        $this->assertEquals('Armor Bar', $mod->pretty_name);
-        $this->assertEquals('Test', $mod->author);
-        $this->assertEquals('Test description', $mod->description);
-        $this->assertEquals('https://example.com/', $mod->link);
+        $this->assertSame(30, $mod->id);
+        $this->assertSame('armorbar', $mod->name);
+        $this->assertSame('v0.7.1', $mod->version);
+        $this->assertSame('f323a8d582302ea0abd615a223f8a68b', $mod->md5);
+        $this->assertSame('https://mirror.technicpack.net/Technic/mods/armorbar/armorbar-v0.7.1.zip', $mod->url);
+        $this->assertSame(25000, $mod->filesize);
+        $this->assertSame('Armor Bar', $mod->pretty_name);
+        $this->assertSame('Test', $mod->author);
+        $this->assertSame('Test description', $mod->description);
+        $this->assertSame('https://example.com/', $mod->link);
 
         // Test if the query parameters are corrects
         $lastRequest = end($historyContainer);
         $expectedQuery = http_build_query(['include' => 'mods', 'k' => 'C3gy35Um2pBE97xn90z0sUNhH1KbzI99'], null, '&', PHP_QUERY_RFC3986);
-        $this->assertEquals($expectedQuery, $lastRequest['request']->getUri()->getQuery());
+        $this->assertSame($expectedQuery, $lastRequest['request']->getUri()->getQuery());
     }
 
     public function testBadPack()
