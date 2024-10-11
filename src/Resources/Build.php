@@ -4,10 +4,10 @@ namespace TechnicPack\SolderClient\Resources;
 
 class Build
 {
-    public int $id = -1;
-    public string $minecraft = "";
+    public ?int $id = -1;
+    public string $minecraft;
     public ?string $java = null;
-    public ?int $memory = -1;
+    public ?int $memory = 0;
     public ?string $forge = null;
     /**
      * @var Mod[] $mods
@@ -16,10 +16,18 @@ class Build
 
     public function __construct($properties)
     {
-        foreach (get_object_vars($this) as $key => $val) {
-            if ($key !== "mods" && array_key_exists($key, $properties)) {
-                $this->{$key} = $properties[$key];
-            }
+        if (array_key_exists('id', $properties) && is_numeric($properties['id'])) {
+            $this->id = $properties['id'];
+        }
+
+        $this->minecraft = $properties['minecraft'];
+
+        if (array_key_exists('java', $properties)) {
+            $this->java = $properties['java'];
+        }
+
+        if (array_key_exists('memory', $properties) && is_numeric($properties['memory'])) {
+            $this->memory = $properties['memory'];
         }
 
         if (isset($properties['mods'])) {

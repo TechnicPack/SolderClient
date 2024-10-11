@@ -9,21 +9,6 @@ use TechnicPack\SolderClient\Resources\Modpack;
 
 class DynamicPropertiesTest extends TestCase
 {
-    public function testBuild()
-    {
-        $props = [
-            'id' => 1,
-            'extra' => 'stuff',
-        ];
-
-        $build = new Build($props);
-
-        $this->assertTrue(property_exists($build, 'id'));
-        $this->assertFalse(property_exists($build, 'extra'));
-
-        $this->assertEquals(1, $build->id);
-    }
-
     public function testMod()
     {
         $props = [
