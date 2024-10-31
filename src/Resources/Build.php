@@ -4,7 +4,7 @@ namespace TechnicPack\SolderClient\Resources;
 
 class Build
 {
-    public ?int $id = -1;
+    public ?string $id = null;
     public string $minecraft;
     public ?string $java = null;
     public ?int $memory = 0;

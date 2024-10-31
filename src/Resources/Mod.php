@@ -4,7 +4,7 @@ namespace TechnicPack\SolderClient\Resources;
 
 class Mod
 {
-    public int $id = -1;
+    public ?string $id = null;
     public string $name = "";
     public ?string $version = null;
     public string $md5 = "";

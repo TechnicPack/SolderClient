@@ -291,7 +291,7 @@ class ClientTest extends TestCase
         $this->assertCount(1, $build->mods);
 
         $mod = $build->mods[0];
-        $this->assertSame(30, $mod->id);
+        $this->assertSame('30', $mod->id);
         $this->assertSame('armorbar', $mod->name);
         $this->assertSame('v0.7.1', $mod->version);
         $this->assertSame('f323a8d582302ea0abd615a223f8a68b', $mod->md5);
