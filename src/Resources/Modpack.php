@@ -4,7 +4,6 @@ namespace TechnicPack\SolderClient\Resources;
 
 class Modpack
 {
-    public ?string $id = null;
     public string $name = "";
     public string $display_name = "";
     public ?string $url = null;

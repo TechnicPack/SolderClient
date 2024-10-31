@@ -292,7 +292,6 @@ class ClientTest extends TestCase
         $this->assertCount(1, $build->mods);
 
         $mod = $build->mods[0];
-        $this->assertSame('30', $mod->id);
         $this->assertSame('armorbar', $mod->name);
         $this->assertSame('v0.7.1', $mod->version);
         $this->assertSame('f323a8d582302ea0abd615a223f8a68b', $mod->md5);
@@ -313,21 +312,5 @@ class ClientTest extends TestCase
     {
         $this->expectException(ConnectionException::class);
         SolderClient::factory('https://solder.example.net/api/', '', [], []);
-    }
-
-    public function testBuildUuid()
-    {
-        $props = [
-            'id' => '9e002c63-a8e5-47fa-b9a2-369f7ab9fe5d',
-            'minecraft' => '1.0',
-        ];
-
-        $build = new Build($props);
-
-        $this->assertObjectHasProperty('id', $build);
-        $this->assertObjectHasProperty('minecraft', $build);
-
-        $this->assertSame('9e002c63-a8e5-47fa-b9a2-369f7ab9fe5d', $build->id);
-        $this->assertSame('1.0', $build->minecraft);
     }
 }

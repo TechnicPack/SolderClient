@@ -12,30 +12,30 @@ class DynamicPropertiesTest extends TestCase
     public function testMod()
     {
         $props = [
-            'id' => 1,
+            'name' => 'foo',
             'extra' => 'stuff',
         ];
 
         $mod = new Mod($props);
 
-        $this->assertTrue(property_exists($mod, 'id'));
+        $this->assertTrue(property_exists($mod, 'name'));
         $this->assertFalse(property_exists($mod, 'extra'));
 
-        $this->assertSame('1', $mod->id);
+        $this->assertSame('foo', $mod->name);
     }
 
     public function testModpack()
     {
         $props = [
-            'id' => 1,
+            'name' => 'foo',
             'extra' => 'stuff',
         ];
 
         $modpack = new Modpack($props);
 
-        $this->assertTrue(property_exists($modpack, 'id'));
+        $this->assertTrue(property_exists($modpack, 'name'));
         $this->assertFalse(property_exists($modpack, 'extra'));
 
-        $this->assertSame('1', $modpack->id);
+        $this->assertSame('foo', $modpack->name);
     }
 }

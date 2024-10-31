@@ -4,7 +4,6 @@ namespace TechnicPack\SolderClient\Resources;
 
 class Build
 {
-    public ?string $id = null;
     public string $minecraft;
     public ?string $java = null;
     public ?int $memory = 0;
@@ -16,10 +15,6 @@ class Build
 
     public function __construct($properties)
     {
-        if (array_key_exists('id', $properties)) {
-            $this->id = $properties['id'];
-        }
-
         $this->minecraft = $properties['minecraft'];
 
         if (array_key_exists('java', $properties)) {
