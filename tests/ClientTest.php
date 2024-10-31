@@ -8,6 +8,7 @@ use TechnicPack\SolderClient\Exception\ConnectionException;
 use TechnicPack\SolderClient\Exception\InvalidURLException;
 use TechnicPack\SolderClient\Exception\ResourceException;
 use TechnicPack\SolderClient\Exception\UnauthorizedException;
+use TechnicPack\SolderClient\Resources\Build;
 use TechnicPack\SolderClient\SolderClient;
 
 use PHPUnit\Framework\TestCase;
@@ -312,5 +313,21 @@ class ClientTest extends TestCase
     {
         $this->expectException(ConnectionException::class);
         SolderClient::factory('https://solder.example.net/api/', '', [], []);
+    }
+
+    public function testBuildUuid()
+    {
+        $props = [
+            'id' => '9e002c63-a8e5-47fa-b9a2-369f7ab9fe5d',
+            'minecraft' => '1.0',
+        ];
+
+        $build = new Build($props);
+
+        $this->assertObjectHasProperty('id', $build);
+        $this->assertObjectHasProperty('minecraft', $build);
+
+        $this->assertSame('9e002c63-a8e5-47fa-b9a2-369f7ab9fe5d', $build->id);
+        $this->assertSame('1.0', $build->minecraft);
     }
 }

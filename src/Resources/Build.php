@@ -16,7 +16,7 @@ class Build
 
     public function __construct($properties)
     {
-        if (array_key_exists('id', $properties) && is_numeric($properties['id'])) {
+        if (array_key_exists('id', $properties)) {
             $this->id = $properties['id'];
         }
 
