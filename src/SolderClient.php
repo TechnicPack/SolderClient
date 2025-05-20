@@ -20,7 +20,7 @@ class SolderClient
     public string $key;
     private Client $client;
 
-    const VERSION = '0.9.0';
+    const VERSION = '0.9.1';
 
     public static function factory($url, $key, $headers = [], $handler = null, $timeout = 3): SolderClient
     {
