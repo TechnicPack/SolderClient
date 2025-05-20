@@ -302,9 +302,9 @@ class ClientTest extends TestCase
         $this->assertSame('Test description', $mod->description);
         $this->assertSame('https://example.com/', $mod->link);
 
-        // Test if the query parameters are corrects
+        // Test if the query parameters are correct
         $lastRequest = end($historyContainer);
-        $expectedQuery = http_build_query(['include' => 'mods', 'k' => 'C3gy35Um2pBE97xn90z0sUNhH1KbzI99'], null, '&', PHP_QUERY_RFC3986);
+        $expectedQuery = http_build_query(['include' => 'mods', 'k' => 'C3gy35Um2pBE97xn90z0sUNhH1KbzI99'], '', '&', PHP_QUERY_RFC3986);
         $this->assertSame($expectedQuery, $lastRequest['request']->getUri()->getQuery());
     }
 
